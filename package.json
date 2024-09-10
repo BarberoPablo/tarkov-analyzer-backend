@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app/index.ts",
+    "dev": "ts-node app/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "tsc --outDir dist && cp -r src/types dist/src/types"
   },
   "keywords": [],
   "author": "",
