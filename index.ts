@@ -3,7 +3,6 @@ import axios from "axios";
 import { FleaMarketItem } from "./types";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Variable para almacenar la respuesta
 let itemsData: FleaMarketItem[] = [];
@@ -44,6 +43,12 @@ fetchItems();
 // Configura el intervalo para actualizar los datos cada 8 horas
 setInterval(fetchItems, 28800000);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Exporta el manejador de solicitudes para Vercel
+export default app;
+
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
