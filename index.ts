@@ -38,11 +38,11 @@ app.get("/api/items", (req, res) => {
   res.json(itemsData);
 });
 
-/* // Llama a fetchItems al iniciar el servidor
+// Llama a fetchItems al iniciar el servidor
 fetchItems();
 
 // Configura el intervalo para actualizar los datos cada 8 horas
-setInterval(fetchItems, 28800000); */
+setInterval(fetchItems, 28800000);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
