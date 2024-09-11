@@ -1,8 +1,11 @@
 import { FleaMarketItem } from "./types";
 import express from "express";
+import cors from "cors";
 import axios from "axios";
 
 const app = express();
+
+app.use(cors({ origin: "http://localhost:5173/" }));
 
 //let itemsData: FleaMarketItem[] = [];
 
