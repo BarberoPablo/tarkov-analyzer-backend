@@ -33,10 +33,11 @@ const fetchItems = async (): Promise<void> => {
 // Fetch items data when the server starts
 fetchItems().then(() => {
   // Set up an interval to fetch items every 8 hours (28800000 ms)
-  setInterval(fetchItems, 28800000);
+  setInterval(fetchItems, 60000);
 });
 
 app.get("/api/items", (_, res) => {
+  console.log("Items data on request");
   res.json(itemsData);
 });
 
