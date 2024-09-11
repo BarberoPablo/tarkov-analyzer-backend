@@ -29,25 +29,30 @@ const fetchItems = async (): Promise<void> => {
     console.error("Error fetching items:", error);
   }
 };
+
 // Llama a fetchItems al iniciar el servidor
-fetchItems();
+const startServer = async () => {
+  await fetchItems();
 
-// Configura el intervalo para actualizar los datos cada 8 horas
-setInterval(fetchItems, 28800000);
+  // Configura el intervalo para actualizar los datos cada 8 horas
+  setInterval(fetchItems, 28800000);
 
-app.get("/api/items", (_, res) => {
-  res.json(itemsData);
-});
-
-app.get("/", (_, res) => {
-  res.json({ message: "Hello world" });
-});
-
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  app.get("/api/items", (_, res) => {
+    res.json(itemsData);
   });
-}
+
+  app.get("/", (_, res) => {
+    res.json({ message: "Hello world" });
+  });
+
+  if (process.env.NODE_ENV !== "production") {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  }
+};
+
+startServer();
 
 export default app;
