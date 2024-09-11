@@ -4,7 +4,7 @@ import axios from "axios";
 
 const app = express();
 
-let itemsData: FleaMarketItem[] = [];
+//let itemsData: FleaMarketItem[] = [];
 
 const fetchItems = async (): Promise<void> => {
   try {
@@ -23,22 +23,40 @@ const fetchItems = async (): Promise<void> => {
       `,
     });
 
-    itemsData = response.data.data.items;
-    console.log(itemsData);
+    return response.data.data.items;
   } catch (error) {
     console.error("Error fetching items:", error);
   }
 };
 
-// Fetch items data when the server starts
+/* // Fetch items data when the server starts
 fetchItems().then(() => {
   // Set up an interval to fetch items every 8 hours (28800000 ms)
   setInterval(fetchItems, 60000);
-});
+}); */
 
-app.get("/api/items", (_, res) => {
-  console.log("Items data on request");
-  res.json(itemsData);
+app.get("/api/items", async (_, res) => {
+  try {
+    const response = await axios.post("https://api.tarkov.dev/graphql", {
+      query: `
+        {
+          items(lang: en) {
+            id
+            name
+            shortName
+            avg24hPrice
+            lastOfferCount
+            lastLowPrice
+          }
+        }
+      `,
+    });
+
+    console.log("Items data on request");
+    res.json(response.data.data.items);
+  } catch (error) {
+    console.error("Error fetching items:", error);
+  }
 });
 
 app.get("/", (_, res) => {
