@@ -5,7 +5,19 @@ import axios from "axios";
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+const allowedOrigins = ["http://localhost:5173", "https://barberopablo.github.io"];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if ((origin && allowedOrigins.includes(origin)) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 //let itemsData: FleaMarketItem[] = [];
 
