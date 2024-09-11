@@ -52,7 +52,6 @@ fetchItems();
 setInterval(fetchItems, 28800000);
 
 // Exporta el manejador de solicitudes para Vercel
-export default app;
 
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 5000;
@@ -60,3 +59,5 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`Server running on port ${PORT}`);
   });
 }
+
+export default app;
