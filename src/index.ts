@@ -39,10 +39,22 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hello /" });
+  res.json({ message: "Hello " });
 });
 
+// Llama a fetchItems al iniciar el servidor
 fetchItems();
+
+// Configura el intervalo para actualizar los datos cada 8 horas
 setInterval(fetchItems, 28800000);
+
+// Exporta el manejador de solicitudes para Vercel
+
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 export default app;
