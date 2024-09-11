@@ -6,6 +6,7 @@ const app = express();
 
 let itemsData: FleaMarketItem[] = [];
 
+// Función para obtener datos
 const fetchItems = async (): Promise<void> => {
   try {
     const response = await axios.post("https://api.tarkov.dev/graphql", {
@@ -22,32 +23,34 @@ const fetchItems = async (): Promise<void> => {
         }
       `,
     });
-
     itemsData = response.data.data.items;
-    console.log("Items data fetched:", itemsData);
+    console.log("Items data fetched:", itemsData); // Verifica que los datos se están cargando
   } catch (error) {
     console.error("Error fetching items:", error);
   }
 };
 
-// Inicializa y configura el servidor
-const initialize = async () => {
-  await fetchItems(); // Asegúrate de que los datos estén cargados
-
-  setInterval(fetchItems, 28800000); // Configura el intervalo para actualizar los datos
-
-  // Rutas
+// Configura las rutas
+const setupRoutes = () => {
   app.get("/api/items", (_, res) => {
-    console.log("Items data on request:", itemsData);
-
+    console.log("Items data on request:", itemsData); // Verifica el estado de itemsData
     res.json(itemsData);
   });
 
   app.get("/", (_, res) => {
     res.json({ message: "Hello world" });
   });
+};
 
-  // Escucha en el puerto solo en desarrollo
+// Inicializa el servidor
+const initialize = async () => {
+  await fetchItems(); // Espera a que los datos se carguen
+
+  setupRoutes(); // Configura las rutas después de cargar los datos
+
+  setInterval(fetchItems, 28800000); // Configura el intervalo para actualizar los datos
+
+  // Solo para desarrollo
   if (process.env.NODE_ENV !== "production") {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
