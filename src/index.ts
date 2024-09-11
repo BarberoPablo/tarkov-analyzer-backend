@@ -38,6 +38,8 @@ const initialize = async () => {
 
   // Rutas
   app.get("/api/items", (_, res) => {
+    console.log("Items data on request:", itemsData);
+
     res.json(itemsData);
   });
 
