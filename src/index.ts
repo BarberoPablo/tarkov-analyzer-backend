@@ -39,6 +39,10 @@ app.get("/api/items", (_, res) => {
   res.json(itemsData);
 });
 
+app.get("/", (_, res) => {
+  res.json({ message: "Hello world" });
+});
+
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
