@@ -37,6 +37,14 @@ app.get("/api/items", (req, res) => {
   res.json(itemsData);
 });
 
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello /api" });
+});
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello /" });
+});
+
 // Llama a fetchItems al iniciar el servidor
 fetchItems();
 
